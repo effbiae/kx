@@ -14,5 +14,8 @@ c: c.c
 g: g.c
 	gcc g.c -o g $X $G
 
+I=/usr/include
+L=$I/x86_64-linux-gnu
+T=*.h $I/cairo/*.h $I/SDL2/*.h $I/*.h $I/sys/*.h
 t:
-	ctags *.h
+	ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q --language-force=C++ -I DECLSPEC,SDLCALL,__attribute__+ $T
