@@ -7,7 +7,7 @@
 #define ON(x,y,z) IN(x,y,z+1)
 
 #define crs(c) cairo_status_to_string(cairo_status((V*)c))
-#define xsx(T,r,f,a,c,z,e) ({if(!((r=(typeof(r))f a) c z))fprintf(stderr,"!!%s:: %s\n",#f,e),fflush(stderr),exit(1);r;})
+#define xsx(T,r,f,a,c,z,e) if(!((r=f a) c z)){fprintf(stderr,"*%s:%s\n",#f,e),fflush(stderr),exit(*(S)0);}
 #define Asx(T,r,f,a,c,z)   xsx(T,r,SDL_##f,a,c,z,SDL_GetError())
 #define Acx(T,r,f,a,c,z)   xsx(T,r,cairo_##f,a,c,z,crs(r))
 #define Atx(T,r,f,a,c,z)   xsx(T,r,TTF_##f,a,c,z,TTF_GetError())
@@ -26,22 +26,11 @@ Z K1(draw)
  SDL_RenderPresent(g.v);
  R kj(9);
 }
-/*
-K1(ini){SA(Init,(SDL_INIT_EVERYTHING));TA(Init,());A(f=TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 24));}
-K1(dC){I d[2];TA(SizeText,(f,(x=T(x),xC),d,d+1));x0;x=ktn(KJ,2);N(2,xJ[i]=d[i]);R x;}
-K1(uC){SDL_Surface*u=TP(u,RenderText_Solid,(f,(x=T(x),xC),gry));x0;K r=kj((J)u);A(r->j>100);R r;}
-K1(du){SDL_Surface*u=(V*)xj;x0;x=ktn(KJ,2);xJ[0]=u->w;xJ[1]=u->h;R x;}
-K1(tu){A(xj>100);V*a=SP(a,CreateTextureFromSurface,(v,(V*)xj));K r=kj((J)a);A(r->j>100);R r;}
-K1(vu){A(xj>100);SDL_FreeSurface((V*)xj);x0;R kj(nj);}
-K1(vt){A(xj>100);SDL_DestroyTexture((V*)xj);x0;R kj(nj);}
-SDL_Rect r4(K x){A(xt=KJ);SDL_Rect r={xJ[0],xJ[1],xJ[2],xJ[3]};R r;}
-K2(rt){SDL_Rect b=r4(y),c=r4(y);R ki(SA(RenderCopyEx,(v,(V*)xj,0,0,0,0,0)));}//&b,&c,0,0,0)));}
-*/
 Z K1(letter)
 {TTF_Font*f=TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 24);
  S s="hello";I d[2];TA(SizeText,(f,s,d,d+1));
- SDL_Color b={0,0,0};SDL_Surface*u=TP(u,RenderText_Solid,(f,s,b));
- SDL_Texture*a=SP(a,CreateTextureFromSurface,(g.v,u));
+ SDL_Color b={0,0,0};SDL_Surface*u;TP(u,RenderText_Shaded,(f,s,b,(SDL_Color){255,255,255}));
+ SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.v,u));
  SDL_Rect e={100,100,d[0],d[1]};
  SA(RenderCopy,(g.v,a,0,&e));
  SDL_RenderPresent(g.v);
