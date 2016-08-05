@@ -1,0 +1,7 @@
+#!/bin/bash
+W=http://kx.com/q
+if [ ! -d l32 ]
+then 
+ for x in l32 l64; do mkdir $x;(cd $x;curl $W/$x/c.o>c.o);done
+ curl $W/c/c/k.h>k.h
+fi
