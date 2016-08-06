@@ -38,7 +38,7 @@ Z K1(txt)
  R kj(6);
 }
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-ZK(*f[])()={home,draw,letter,txt,0};ZS n[]={"home","draw","letter","txt",0};ZJ a[]={1,1,1,1};//exported functions and their arity
+ZK(*f[])()={home,draw,txt,0};ZS n[]={"home","draw","txt",0};ZJ a[]={1,1,1};//exported functions and their arity
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
