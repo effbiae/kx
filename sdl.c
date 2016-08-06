@@ -16,29 +16,19 @@ S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}/*S Cer(V*x)
 #define TP(r,f,a) XY(TTF,!,r,f,a)
 
 struct {SDL_Renderer*v;SDL_Window*w;TTF_Font*f;J d[2];}g;
-Z K1(draw)
-{SDL_SetRenderDrawColor(g.v,0,0,255,255);
- SDL_Rect q={xg*3,50,50,50};
- SDL_RenderFillRect(g.v,&q);
- SDL_RenderPresent(g.v);
- R kj(9);
-}
 Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
 Z K1(txt)
 {K2(line){A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};
           K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.v,u));
-          SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
-          SA(RenderCopy,(g.v,a,0,&e));
-          SDL_DestroyTexture(a);
-/*NB u*/  u->w;u->h; SDL_FreeSurface(u);
-          r0(s);
+          SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};SA(RenderCopy,(g.v,a,0,&e));SDL_DestroyTexture(a);
+/*NB u*/  u->w;u->h;SDL_FreeSurface(u);r0(s);
  }
  A(!xt);DO(xn,line(xK[i],kj(i)))
  SDL_RenderPresent(g.v);
  R kj(6);
 }
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-ZK(*f[])()={home,draw,txt,0};ZS n[]={"home","draw","txt",0};ZJ a[]={1,1,1};//exported functions and their arity
+ZK(*f[])()={home,txt,0};ZS n[]={"home","txt",0};ZJ a[]={1,1};//exported functions and their arity
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
