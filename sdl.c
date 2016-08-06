@@ -61,7 +61,7 @@ I main(I n,S*v){
  {SDL_Event event;
   while(SDL_PollEvent(&event))
   {if(event.type==SDL_QUIT)run=0;
-   else if (event.type == SDL_KEYDOWN){ C d=event.key.keysym.sym; if(d=='\r'||ON(d,'a','z'))k(-c,"{k 0N!x}",kc(d),(K)0); }
+   else if (event.type==SDL_KEYDOWN){C d=event.key.keysym.sym;if(strchr(" \r",d)||ON(d,'a','z'))k(-c,"{k 0N!x}",kc(d),(K)0);}
   }if(c==sel(c,1e-2))A(sr(c));
  }
  SDL_DestroyWindow(w);
