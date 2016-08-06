@@ -30,24 +30,12 @@ Z K1(txt)
           SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
           SA(RenderCopy,(g.v,a,0,&e));
           SDL_DestroyTexture(a);
-          u->w;u->h; SDL_FreeSurface(u);
+/*NB u*/  u->w;u->h; SDL_FreeSurface(u);
           r0(s);
  }
  A(!xt);DO(xn,line(xK[i],kj(i)))
  SDL_RenderPresent(g.v);
  R kj(6);
-}
-Z K1(letter)
-{TTF_Font*f=TTF_OpenFont("DejaVuSansMono.ttf", 12);
- S s="hello";I d[2];TA(SizeText,(f,s,d,d+1));
- SDL_Color b={0,0,0};SDL_Surface*u;TP(u,RenderText_Shaded,(f,s,b,(SDL_Color){255,255,255}));
- SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.v,u));
- SDL_Rect e={0,0,d[0],d[1]};
- SA(RenderCopy,(g.v,a,0,&e));
- SDL_RenderPresent(g.v);
- SDL_DestroyTexture(a);
- u->w;u->h; SDL_FreeSurface(u);
- R kj(8);
 }
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
 ZK(*f[])()={home,draw,letter,txt,0};ZS n[]={"home","draw","letter","txt",0};ZJ a[]={1,1,1,1};//exported functions and their arity
