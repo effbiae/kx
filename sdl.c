@@ -17,6 +17,11 @@ S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}/*S Cer(V*x)
 
 struct {SDL_Renderer*v;SDL_Window*w;TTF_Font*f;J d[2];}g;
 Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
+#define DJ(T) DO(n,xJ[i]=((T*)a)[i])
+ZK JA(V*a,J n,J z){K x=ktn(KJ,n);SW(z){CS(8,DJ(J))CS(4,DJ(I))CS(2,DJ(H))CS(1,DJ(G))CD:A(0)}R x;}
+ZK J2(J*a){R JA(a,2,8);}ZK JI2(I*a){R JA(a,2,4);}
+Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);x=ktn(KJ,2);DO(2,xJ[i]=s[i]);R x;}
+Z K1(finfo){x=ktn(KJ,2);DO(2,xJ[i]=g.d[i]);R x;}
 Z K1(txt)
 {K2(line){A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};
           K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.v,u));
@@ -28,7 +33,7 @@ Z K1(txt)
  R kj(6);
 }
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-ZK(*f[])()={home,txt,0};ZS n[]={"home","txt",0};ZJ a[]={1,1};//exported functions and their arity
+ZK(*f[])()={home,txt,winfo,finfo,0};ZS n[]={"home","txt","winfo","finfo",0};ZJ a[]={1,1,1,1};//exported functions and their arity
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
@@ -51,7 +56,11 @@ I main(I n,S*v){
  {SDL_Event event;
   while(SDL_PollEvent(&event))
   {if(event.type==SDL_QUIT)run=0;
-   else if (event.type==SDL_KEYDOWN){C d=event.key.keysym.sym;if(strchr(" \r",d)||ON(d,'a','z'))k(-c,"{k 0N!x}",kc(d),(K)0);}
+   else if (event.type==SDL_KEYDOWN){SDL_Keycode d=event.key.keysym.sym;C e=-1;
+    if(ON(d,SDLK_RIGHT,SDLK_UP))e=d-SDLK_RIGHT;
+    if(strchr(" \r",d)||ON(d,'a','z'))e=d;
+    if(e!=-1)k(-c,"{k 0N!x}",kc(e),(K)0);
+   }
   }if(c==sel(c,1e-2))A(sr(c));
  }
  SDL_DestroyWindow(w);
