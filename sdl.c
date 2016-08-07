@@ -1,12 +1,13 @@
 //install libsdl2-dev libsdl2-ttf-dev [libcairo2-dev]
 #include<SDL2/SDL_ttf.h>
+#include<cairo/cairo.h>
 #include"k.h"
 #define A(x) if(!(x))O("A(%s)@%d\n",#x,__LINE__),exit(*(S)0);  //assert - simplistic error handling
 #define IN(x,y,z) ({typeof(x) _x=x;_x>=(y)&&_x<(z);})
 #define ON(x,y,z) IN(x,y,z+1)
 
 #define crs(c) cairo_status_to_string(cairo_status((V*)c))
-S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}/*S Cer(V*x){R (S)cairo_status_to_string(cairo_status(x));}*/
+S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}S cairo_e(V*x){R (S)cairo_status_to_string(cairo_status(x));}
 #define xsx(c,r,f,a,e) if(c(r=f a)){O("*%s:%s %d\n",#f,e,__LINE__),exit(*(S)0);}
 #define XY(x,c,r,f,a) xsx(c,r,x##_##f,a,x##_e((V*)r))
 #define XZ(x,c,f,a) ({J _r;XY(x,c,_r,f,a);})
@@ -14,24 +15,42 @@ S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}/*S Cer(V*x)
 #define SP(r,f,a) XY(SDL,!,r,f,a)
 #define TA(f,a)   XZ(TTF,!!, f,a)
 #define TP(r,f,a) XY(TTF,!,r,f,a)
+#define CA(f,a)   XZ(cairo,!!, f,a)
+#define CP(r,f,a) XY(cairo,!,r,f,a)
 
-struct {SDL_Renderer*v;SDL_Window*w;TTF_Font*f;J d[2];}g;
+struct {SDL_Renderer*r;SDL_Window*w;TTF_Font*f;J d[2];}g;
+cairo_t*cai(cairo_t*(*f)(cairo_t*))
+{int width, height, pitch;void *pixels;
+ SDL_GetWindowSize(g.w, &width, &height);
+ SDL_Texture*t;SP(t,CreateTexture,(g.r,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STREAMING,width,height));
+ SA(LockTexture,(t, NULL, &pixels, &pitch));
+ cairo_surface_t *cs;CP(cs,image_surface_create_for_data,(pixels,CAIRO_FORMAT_ARGB32,width,height,pitch));
+ A(cs);cairo_t*s;CP(s,create,(cs));A(s);
+ cairo_t*fr;A(fr=f(s));SDL_UnlockTexture(t);SA(RenderCopy,(g.r,t,NULL,NULL));SDL_RenderPresent(g.r);R fr;
+}
+cairo_t*cb(cairo_t*cr)
+{char buf[128] = "hello world";
+ cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
+ cairo_rectangle(cr, 10, 20, 128, 128);
+ cairo_stroke(cr); //cairo_fill(cr)
+ R cr;
+}
+
 Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
 #define DJ(T) DO(n,xJ[i]=((T*)a)[i])
-ZK JA(V*a,J n,J z){K x=ktn(KJ,n);SW(z){CS(8,DJ(J))CS(4,DJ(I))CS(2,DJ(H))CS(1,DJ(G))CD:A(0)}R x;}
-ZK J2(J*a){R JA(a,2,8);}ZK JI2(I*a){R JA(a,2,4);}
-Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);x=ktn(KJ,2);DO(2,xJ[i]=s[i]);R x;}
-Z K1(finfo){x=ktn(KJ,2);DO(2,xJ[i]=g.d[i]);R x;}
+ZK JA(V*a,J n,J z){K x=ktn(KJ,n);SW(z){CS(8,DJ(J))CS(4,DJ(I))CS(2,DJ(H))CS(1,DJ(G))CD:A(0)}R x;}ZK J2(J*a){R JA(a,2,8);}ZK JI2(I*a){R JA(a,2,4);}
+Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
 Z K1(txt)
 {K2(line){A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};
-          K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.v,u));
-          SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};SA(RenderCopy,(g.v,a,0,&e));SDL_DestroyTexture(a);
+          K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));
+          SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};SA(RenderCopy,(g.r,a,0,&e));SDL_DestroyTexture(a);
 /*NB u*/  u->w;u->h;SDL_FreeSurface(u);r0(s);
  }
  A(!xt);DO(xn,line(xK[i],kj(i)))
- SDL_RenderPresent(g.v);
+ SDL_RenderPresent(g.r);
  R kj(6);
 }
+K1(line){}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
 ZK(*f[])()={home,txt,winfo,finfo,0};ZS n[]={"home","txt","winfo","finfo",0};ZJ a[]={1,1,1,1};//exported functions and their arity
 
@@ -48,9 +67,9 @@ ZI sel(I c,F t)
 ZK sr(I c){I t;K x;A(x=k(c,(S)0));R k(-c,"",call(x),(K)0);} //async from q
 I main(I n,S*v){
  I c=khp("",5001);g0();
- S x="title";I y=500,z=500,a=SDL_WINDOWPOS_UNDEFINED;SDL_Window*w=SDL_CreateWindow(x,a,a,y,z,SDL_WINDOW_SHOWN);
- g.v=SDL_CreateRenderer(w,-1,SDL_RENDERER_ACCELERATED);SDL_SetRenderDrawColor(g.v,255,255,255,255);SDL_RenderClear(g.v);
- SDL_RenderPresent(g.v);
+ S x="title";I y=500,z=500,a=SDL_WINDOWPOS_UNDEFINED;SP(g.w,CreateWindow,(x,a,a,y,z,SDL_WINDOW_SHOWN));
+ SP(g.r,CreateRenderer,(g.w,-1,SDL_RENDERER_ACCELERATED));SA(SetRenderDrawColor,(g.r,255,255,255,255));SA(RenderClear,(g.r));
+ SDL_RenderPresent(g.r);
  I run = 1;
  while(run)
  {SDL_Event event;
@@ -63,7 +82,7 @@ I main(I n,S*v){
    }
   }if(c==sel(c,1e-2))A(sr(c));
  }
- SDL_DestroyWindow(w);
+ SDL_DestroyWindow(g.w);
  SDL_Quit();
  return 0;
 }
