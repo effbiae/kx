@@ -51,7 +51,7 @@ Z K1(start)//rect
 Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
 Z K1(tx)//string: w h,texture
 {A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));
- SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));K z=ktn(KI,2);SA(QueryTexture,(a,0,0,zI,zI+1));/*SDL_FreeSurface(u);*/R knk(2,r1(z),r1(kj((J)a)));
+ SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));K z=ktn(KI,2);SA(QueryTexture,(a,0,0,zI,zI+1));SDL_FreeSurface(u);R knk(2,r1(z),r1(kj((J)a)));
 }
 Z K2(rcp){//i4,texture... SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
  O("%lld\n",yj);
