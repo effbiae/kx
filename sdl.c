@@ -49,12 +49,14 @@ Z K1(start)//rect
  SDL_RenderPresent(g.r);R kj((J)g.r);
 }
 Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
-Z K2(tx)
+Z K1(tx)//string: w h,texture
 {A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));
- SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));K z=ktn(KI,2);SA(QueryTexture,(a,0,0,zI,zI+1));/*SDL_FreeSurface(u);*/R knk(2,z,kj((J)a));
+ SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));K z=ktn(KI,2);SA(QueryTexture,(a,0,0,zI,zI+1));/*SDL_FreeSurface(u);*/R knk(2,r1(z),r1(kj((J)a)));
 }
 Z K2(rcp){//i4,texture... SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
+ O("%lld\n",yj);
  SA(RenderCopy,(g.r,(V*)yj,0,(V*)xI));//*SDL_DestroyTexture(a);*/SDL_RenderCopy
+ SDL_RenderPresent(g.r);R kj((J)g.r);
 }
 Z K1(txt)
 {K2(line){A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};
@@ -70,11 +72,11 @@ Z K1(txt)
 K1(line){}
 K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t))else A(0)}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-ZK(*f[])()={home,start,txt,tx,0};ZS n[]={"home","start","txt","tx",0};ZJ a[]={1,1,1,2};//exported functions and their arity
+ZK(*f[])()={home,start,txt,tx,rcp,0};ZS n[]={"home","start","txt","tx","rcp",0};ZJ a[]={1,1,1,1,2};//exported functions and their arity
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
- P(0>xt,d(0));A(xt==0);A(xn>1);A(xx->t==-KS);R f[xy->j](xK[2]);
+ P(0>xt,d(0));A(xt==0);A(xn>1);A(xx->t==-KS);I n=xn-2;A(n<3);R n==1?f[xy->j](xK[2]):f[xy->j](xK[2],xK[3]);
 }
 Z K1(font){TP(g.f,OpenFont,("DejaVuSansMono.ttf",12));I d[2];TA(SizeText,(g.f,"Wy",d,d+1));*d=*d/2;DO(2,g.d[i]=d[i]);R kj(7);}
 ZI g0(){SDL_Init(SDL_INIT_EVERYTHING);TTF_Init();font(0);}
