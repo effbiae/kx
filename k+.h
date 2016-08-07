@@ -16,7 +16,7 @@
 #define yt y->t
 #define yu y->u
 #define yn y->n
-#define yy yK[0]
+#define yx yK[0]
 #define yy yK[1]
 #define yg TX(G,y)
 #define yc TX(C,y)
@@ -42,8 +42,8 @@
 #define zt z->t
 #define zu z->u
 #define zn z->n
-#define zz zK[0]
-#define zz zK[1]
+#define zx zK[0]
+#define zy zK[1]
 #define zg TX(G,z)
 #define zc TX(C,z)
 #define zh TX(H,z)
@@ -68,8 +68,8 @@
 #define rt r->t
 #define ru r->u
 #define rn r->n
-#define rr rK[0]
-#define rr rK[1]
+#define rx rK[0]
+#define ry rK[1]
 #define rg TX(G,r)
 #define rc TX(C,r)
 #define rh TX(H,r)
