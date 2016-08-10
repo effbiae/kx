@@ -4,7 +4,7 @@ fs:{{-6!-5!x,":{GET[(`",x,";",z,";",(";"/:$y#"xyz"),")]}"}.'(+($ x 0;x 1)),'$!#x
 .z.po:{h::x;fs 0N!GET`;start 200 200 900 700i}
 .z.ps:{0N!.:x}
 p:0 0
-fg:0x00000000;bg:0x55555500
+fg:0x00000000;bg:0x22222200
 a:("99";"The quick brown fox jumped over the lazy dog")
 k:{txf::tx[fg;bg];ttx a}
 ttx:{rp rcp .'tx0 lam'lir::(0i,'+\last'wh),'wh:txz'tx0::txf'x;tim[500;`blink;0]}
