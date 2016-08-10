@@ -72,14 +72,14 @@ ZK tx(K x,K y,K z)//fg,bg,string: texture
  SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);
 }
 Z K1(txz){A(xt==-KJ)K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
-ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=y;f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
-ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,b9(-1,d)));R knk(2,ki(i),d);}
-Z K1(tim0){A(SDL_RemoveTimer(xK[0]->i))r0(x);kj(nj);}
+ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=d9(y);f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
+ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,b9(-1,d)));R ki(i);}
+ZK tio(K x){A(SDL_RemoveTimer(xi));R kj(0);}
 #define C1(x) C(t)*x(C(t)*t)
 K1(line){}
 K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t))else A(0)}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-#define F(m) m(home,1),m(start,1),m(tim,3),m(txt,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
+#define F(m) m(home,1),m(start,1),m(tim,3),m(tio,1),m(txt,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
 
 Z K1(call)
@@ -105,7 +105,7 @@ I main(I n,S*v){
     if(ON(d,SDLK_RIGHT,SDLK_UP))e=d-SDLK_RIGHT;
     if(strchr(" \r",d)||ON(d,'a','z'))e=d;
     if(e!=-1&&c>0)k(-c,"{k 0N!x}",kc(e),(K)0);
-   }else if(e.type==SDL_USEREVENT){K x=d9(e.user.data1);A(!xt);A(xn==2);k(-c,"{value[x]y}",xK[0]->s,xK[1],(K)0);}
+   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-c,"{value[x]y}",xK[0],xK[1],(K)0);}
   }
   if(c==sel(c,1e-2))A(sr(c));
  }

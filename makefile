@@ -1,4 +1,4 @@
-K=-g -DKXVER=3
+K=-g3 -DKXVER=3
 S=$K-fPIC -shared 
 X=$K -pthread l64/c.o
 G=-lSDL2 -lcairo -lSDL2_ttf
