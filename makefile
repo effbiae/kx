@@ -11,8 +11,8 @@ r: r.c
 	gcc r.c -o r
 c: c.c
 	gcc c.c -o c -DTEST 
-g: g.c
-	gcc g.c -o g $X $G
+_g: _g.c
+	gcc _g.c -o _g $X $G
 
 I=/usr/include
 L=$I/x86_64-linux-gnu
