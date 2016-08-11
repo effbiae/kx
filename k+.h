@@ -1,15 +1,26 @@
 #include"k.h"
-/*
-// remove more clutter
-#define O printf
-#define R return
-#define Z static
-#define P(x,y) {if(x)R(y);}
-#define U(x) P(!(x),0)
-#define SW switch
-#define CS(n,x)	case n:x;break;
-#define CD default
-*/
+
+#define O2(x...) fprintf(stderr,x)
+#define _ static inline
+#undef P
+#define P(b,a...)   if(b)return(a);
+#define N(n,a...)   {I i=0,_n=(n);while(i<_n){a;++i;}}
+#define W(b...)     while((b))              //while
+#define $(b,a...)   if(b){a;}else           //cond
+#define C(i,a...)   case i:{a;}break;       //case
+#define S(i,c,a...) switch(i){c default:a;} //switch
+#define MN(a,b)    ({typeof(a)_a=(a);typeof(a)_b=(b);_a<_b?_a:_b;})
+#define MX(a,b)    ({typeof(a)_a=(a);typeof(a)_b=(b);_a>_b?_a:_b;})
+#define IN(x,y,z)  ({typeof(x) _x=x;_x>=(y)&&_x<(z);})
+#define ON(x,y,z)   IN(x,y,z+1)
+
+#define PE perror
+#define AC(s...)    (O2(s),exit(1),(V*)0L) 
+#define AB(s)       AC(":%s\n",s)
+#define AN(x,y)     ((x)==(y)?PE(__FILE__),AC("%s==%s @%d\n",#x,#y,__LINE__):0)
+#define AS(x)       AN(-1,(x))
+#define A(x)        ((x)?0:(O2("A(%s)@%d\n",#x,__LINE__),AB(*(S*)0)))
+
 #define xc TX(C,x)
 
 #define yr y->r
