@@ -86,14 +86,14 @@ ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
  P(0>xt,d(0));A(xt==0);A(xn>1);A(xx->t==-KS);I n=xn-2;A(n<4);
- O(">%s",xx->s);K r=n==1?f[xy->j](xK[2]):n==2?f[xy->j](xK[2],xK[3]):f[xy->j](xK[2],xK[3],xK[4]);O(" %s,\n",xx->s);fflush(stdout);R r;
+ 0&&O(">%s",xx->s);K r=n==1?f[xy->j](xK[2]):n==2?f[xy->j](xK[2],xK[3]):f[xy->j](xK[2],xK[3],xK[4]);0&&O(" %s,\n",xx->s);fflush(stdout);R r;
 }
-Z K1(font){TP(g.f,OpenFont,("DejaVuSansMono.ttf",14));I d[2];TA(SizeText,(g.f,"Wy",d,d+1));*d=*d/2;DO(2,g.d[i]=d[i]);R kj(7);}
+Z K1(font){TP(g.f,OpenFont,("DejaVuSansMono.ttf",14));I d[2];TA(SizeText,(g.f,"Wy",d,d+1));*d/=2;DO(2,g.d[i]=d[i]);R kj(7);}
 ZI g0(){SDL_Init(SDL_INIT_EVERYTHING);TTF_Init();font(0);}
-ZI sel(I c,F t){I r;fd_set f,*p=&f;FD_ZERO(p);if(-1<c)FD_SET(c,p);else p=0;long s=t,v[]={s,1e6*(t-s)};AS(r=select(c+1,p,(V*)0,(V*)0,(V*)v));P(r&&FD_ISSET(c,&f),c)R 0;}
+ZI sel(I c,F t){I r;fd_set f,*p=&f;if(-1<c){FD_ZERO(p);FD_SET(c,p);}else p=0;long s=t,v[]={s,1e6*(t-s)};AS(r=select(c+1,p,(V*)0,(V*)0,(V*)v));P(r&&FD_ISSET(c,&f),c)R 0;}
 ZK sr(I c){I t;K x;A(x=k(c,(S)0));R k(-c,"",call(x),(K)0);} //async from q
 ZI fexec(I n,S*v)
-{I p=5001;I kon(F t,I n){N(n,P(0<(g.c=khp("localhost",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
+{I p=5001;I kon(F t,I n){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
  AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
 I main(I n,S*v){
