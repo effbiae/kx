@@ -47,10 +47,10 @@ Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
 #define SE(n,x,y,t,u) DO(n,((t*)x)[i]=((u*)y)[i])
 #define SEJ(n,x,y,u)  SE(n,x,J,y,u)  // ZH t[]={[0=8],[KC=1],[KH=2],[KI=4],[KJ=8]};
 ZK JA(V*a,J n,J z){K x=ktn(KJ,n);SW(z){CS(8,DJ(J))CS(4,DJ(I))CS(2,DJ(H))CS(1,DJ(G))CD:A(0);}R x;}ZK J2(J*a){R JA(a,2,8);}ZK JI2(I*a){R JA(a,2,4);}
-Z K1(start)//rect
-{SP(g.w,CreateWindow,("W",xI[0],xI[1],xI[2],xI[3],SDL_WINDOW_SHOWN));
- SP(g.r,CreateRenderer,(g.w,-1,SDL_RENDERER_ACCELERATED));SA(SetRenderDrawColor,(g.r,255,255,255,255));SA(RenderClear,(g.r));
- SDL_RenderPresent(g.r);R kj((J)g.r);
+ZI SRDC(V*,G*);
+Z K2(start)
+{A(xt==KI&&xn==4);SP(g.w,CreateWindow,("W",xI[0],xI[1],xI[2],xI[3],SDL_WINDOW_SHOWN));SP(g.r,CreateRenderer,(g.w,-1,SDL_RENDERER_ACCELERATED));
+ A(yt==KG&&yn==4);A(!SRDC(g.r,yG));SA(RenderClear,(g.r));SDL_RenderPresent(g.r);R kj((J)g.r);
 }
 Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
 /* blink works: set/remove timer
@@ -63,6 +63,8 @@ Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);
 Z K1(t0){SDL_DestroyTexture((V*)xj);R kj(0);}
 Z K2(rcp)/*texture,i4...*/{SA(RenderCopy,(g.r,(V*)xj,0,(SDL_Rect*)yI));R kj((J)g.r); }//SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
 Z K1(rp){SDL_RenderPresent(g.r);R kj((J)g.r);}
+ZI SRDC(V*r,G*c){SA(SetRenderDrawColor,(r,c[0],c[1],c[2],c[3]));R 0;}
+Z K1(rdc){A(xt=KG);A(!SRDC(g.r,xG));R kj(0);}
 ZK tx(K x,K y,K z)//fg,bg,string: texture
 {A(zt==KC);if(zn==0){K r=ktn(6,2);*rJ=0;R knk(2,r,kj(23));}SDL_Color c(K x){A(xt==KG);A(xn==4);R (SDL_Color){xG[0],xG[1],xG[2],xG[3]};}
  SDL_Color f=c(x),b=c(y);x=T(z);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,xC,f,b));
@@ -73,10 +75,10 @@ ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.co
 ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,r1(d)));R ki(i);}
 Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
 #define C1(x) CO(t)*x(CO(t)*t)
-Z K1(rect){}
+Z K1(rect){A(xt==KI);SA(RenderDrawRect,(g.r,(SDL_Rect*)xI));}
 Z K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t));else A(0);}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-#define F(m) m(home,1),m(start,1),m(tim,3),m(tio,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
+#define F(m) m(home,1),m(start,2),m(tim,3),m(tio,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rect,1),m(rp,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
 
 Z K1(call)
