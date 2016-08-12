@@ -8,5 +8,5 @@ p:1 5
 a:("99";"The quick brown fox jumped over the lazy dog")
 k:{txf::tx[fg;bg];ttx a}
 ttx:{rp rcp .'tx0 lam'lir::(0i,'+\last'wh),'wh:txz'tx0::txf'x;fb::(bg;fg);$[`ti in ."\\v";tio[ti];0];ti::tim[500;`blink;0]}
-blink:{fb::|fb;t:(tx . fb)@,a . p;rcp .'tx0 lam'lir;rcp[t;0N!@[lir[*p];0 2;:;7h$(p[1]*u;u:*txz t)]];rp`}
+blink:{fb::|fb;t:(tx . fb)@,a . p;rcp[t;0N!@[lir[*p];0 2;:;7h$(p[1]*u;u:*txz t)]];rp`}
 /k:{0N!(p;x;a);$[4>i:7h$x;p::0 0|/p+(0 1;0 -1;1 0;-1 0)i;[a[p 0]:({y,x,z}[x]/)(0,p[1])_a[p 0];p+:0 1]];txt a}
