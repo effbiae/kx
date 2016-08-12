@@ -65,8 +65,9 @@ Z K2(rcp)/*texture,i4...*/{SA(RenderCopy,(g.r,(V*)xj,0,(SDL_Rect*)yI));R kj((J)g
 Z K1(rp){SDL_RenderPresent(g.r);R kj((J)g.r);}
 ZI SRDC(V*r,G*c){SA(SetRenderDrawColor,(r,c[0],c[1],c[2],c[3]));R 0;}
 Z K1(rdc){A(xt=KG);A(!SRDC(g.r,xG));R kj(0);}
-ZK tx(K x,K y,K z)/*fg,bg,s:txr*/{A(zt==KC);if(zn==0){K r=ktn(6,2);*rJ=0;R knk(2,r,kj(23));}SDL_Color c(K x){A(xt==KG);A(xn==4);R (SDL_Color){xG[0],xG[1],xG[2],xG[3]};}
- SDL_Color f=c(x),b=c(y);x=T(z);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,xC,f,b));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);}
+Z SDL_Color*c(K x){A(xt==KG);A(xn==4);R (SDL_Color*)xG;} //[0],xG[1],xG[2],xG[3]};}
+ZK tx(K x,K y,K z)/*fg,bg,s:txr*/{A(zt==KC);if(zn==0){K r=ktn(6,2);*rJ=0;R knk(2,r,kj(23));}
+ SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(T(z)),*c(x),*c(y)));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);}
 Z K1(txz){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
 ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=y;f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
 ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,r1(d)));R ki(i);}
