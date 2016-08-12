@@ -53,20 +53,16 @@ Z K1(start)//rect
  SDL_RenderPresent(g.r);R kj((J)g.r);
 }
 Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
+/* blink works: set/remove timer
+ * by default, text stretches across screen
+ * NOW split screen - render white, bg color rectangle in text area
+ * on ctrl-[, zip right to left white background, ctrl-] to zip back
+ * select text to run, run to cursor, run line
+ *  + scratch pad for ad-hoc zips up under text
+*/
 Z K1(t0){SDL_DestroyTexture((V*)xj);R kj(0);}
-Z K1(r9){SDL_RenderPresent(g.r); R kj(0);}
 Z K2(rcp)/*texture,i4...*/{SA(RenderCopy,(g.r,(V*)xj,0,(SDL_Rect*)yI));R kj((J)g.r); }//SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
 Z K1(rp){SDL_RenderPresent(g.r);R kj((J)g.r);}
-Z K1(txt)
-{K2(line){A(xt==KC);SDL_Color b={0,0,0},f={200,200,200};
-          K s=T(x);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(s),b,f));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));
-          SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};SA(RenderCopy,(g.r,a,0,&e));SDL_DestroyTexture(a);
-/*NB u*/  u->w;u->h;SDL_FreeSurface(u);r0(s);
- }
- A(!xt);DO(xn,line(xK[i],kj(i)))
- SDL_RenderPresent(g.r);
- R kj(6);
-}
 ZK tx(K x,K y,K z)//fg,bg,string: texture
 {A(zt==KC);if(zn==0){K r=ktn(6,2);*rJ=0;R knk(2,r,kj(23));}SDL_Color c(K x){A(xt==KG);A(xn==4);R (SDL_Color){xG[0],xG[1],xG[2],xG[3]};}
  SDL_Color f=c(x),b=c(y);x=T(z);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,xC,f,b));
@@ -80,16 +76,8 @@ Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
 Z K1(rect){}
 Z K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t));else A(0);}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
-#define F(m) m(home,1),m(start,1),m(tim,3),m(tio,1),m(txt,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
+#define F(m) m(home,1),m(start,1),m(tim,3),m(tio,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
-
-/* blink works: set/remove timer
- * by default, text stretches across screen
- * NOW split screen - render white, bg color rectangle in text area
- * on ctrl-[, zip right to left white background, ctrl-] to zip back
- * select text to run, run to cursor, run line
- *  + scratch pad for ad-hoc zips up under text
-*/
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
@@ -113,7 +101,7 @@ I main(I n,S*v){
     if(ON(d,SDLK_RIGHT,SDLK_UP))e=d-SDLK_RIGHT;
     if(strchr(" \r",d)||ON(d,'a','z'))e=d;
     if(e!=-1&&g.c>0)k(-g.c,"{k 0N!x}",kc(e),(K)0);
-   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);r0(x);}
+   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}
   }
   if(g.c==sel(g.c,1e-2))A(sr(g.c));
  }
