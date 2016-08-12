@@ -73,15 +73,23 @@ ZK tx(K x,K y,K z)//fg,bg,string: texture
  SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);
 }
 Z K1(txz){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
-ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=d9(y);f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
-ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,b9(-1,d)));R ki(i);}
-ZK tio(K x){A(SDL_RemoveTimer(xi));R kj(0);}
+ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=y;f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
+ZK tim(K x,K y,K z){K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xj,(V*)tcb,r1(d)));R ki(i);}
+Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
 #define C1(x) CO(t)*x(CO(t)*t)
-K1(line){}
-K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t));else A(0);}
+Z K1(rect){}
+Z K1(cur){if(xt==KJ){DO(2,g.u[i]=xJ[i]);SDL_TimerID t;A(t=SDL_AddTimer(1000,0,kj(0)));}else if(xt==-KJ)A(SDL_RemoveTimer(g.t));else A(0);}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
 #define F(m) m(home,1),m(start,1),m(tim,3),m(tio,1),m(txt,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rp,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
+
+/* blink works: set/remove timer
+ * by default, text stretches across screen
+ * NOW split screen - render white, bg color rectangle in text area
+ * on ctrl-[, zip right to left white background, ctrl-] to zip back
+ * select text to run, run to cursor, run line
+ *  + scratch pad for ad-hoc zips up under text
+*/
 
 Z K1(call)
 {K1(d){K k=ktn(KS,0),v=ktn(KJ,0);J i=0;while(f[i])js(&k,ss(n[i])),ja(&v,a+i),i++;R knk(2,k,v);}
@@ -105,7 +113,7 @@ I main(I n,S*v){
     if(ON(d,SDLK_RIGHT,SDLK_UP))e=d-SDLK_RIGHT;
     if(strchr(" \r",d)||ON(d,'a','z'))e=d;
     if(e!=-1&&g.c>0)k(-g.c,"{k 0N!x}",kc(e),(K)0);
-   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",xK[0],xK[1],(K)0);}
+   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);r0(x);}
   }
   if(g.c==sel(g.c,1e-2))A(sr(g.c));
  }
