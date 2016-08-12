@@ -86,7 +86,9 @@ Z K1(call)
 Z K1(font){TP(g.f,OpenFont,("DejaVuSansMono.ttf",14));I d[2];TA(SizeText,(g.f,"Wy",d,d+1));*d/=2;DO(2,g.d[i]=d[i]);R kj(7);}
 ZI g0(){SDL_Init(SDL_INIT_EVERYTHING);TTF_Init();font(0);}
 ZI sel(I c,F t){I r;fd_set f,*p=&f;if(-1<c){FD_ZERO(p);FD_SET(c,p);}else p=0;long s=t,v[]={s,1e6*(t-s)};AS(r=select(c+1,p,(V*)0,(V*)0,(V*)v));P(r&&FD_ISSET(c,&f),c)R 0;}
-ZK sr(I c){I t;K x;A(x=k(c,(S)0));R k(-c,"",call(x),(K)0);} //async from q
+Z K2(comma){K r=ktn(0,yt?2:yn+1);rx=r1(x);DO(yt?1:yn,r1(rK[i+1]=yt?y:yK[i]));R r;}
+Z K1(drop1){A(!xt);if(xn==2)R r1(xK[1]);else{K r=ktn(0,xn-1);DO(xn-1,rK[i]=r1(xK[i+1]))R r;}}
+ZK sr(I c){I t;K x;A(x=k(c,(S)0));R k(-c,"",comma(xx,call(drop1(x))),(K)0);} //async from q
 ZI fexec(I n,S*v)
 {I p=5001;I kon(F t,I n){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
  AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10);P(g.c,g.c)wat(g.q);}}
