@@ -69,7 +69,7 @@ Z SDL_Color*c(K x){A(xt==KG);A(xn==4);R (SDL_Color*)xG;} //[0],xG[1],xG[2],xG[3]
 ZK tx(K x,K y,K z)/*fg,bg,s:txr*/{A(zt==KC);if(zn==0){K r=ktn(6,2);*rJ=0;R knk(2,r,kj(23));}
  SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(T(z)),*c(x),*c(y)));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);}
 Z K1(txz){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
-ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f;e.type=f.type=SDL_USEREVENT;f.code=0;f.data1=y;f.data2=0;e.user=f;A(SDL_PushEvent(&e));R x;}
+ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f={0};e.type=f.type=SDL_USEREVENT;f.data1=y;e.user=f;A(SDL_PushEvent(&e));R x;}
 ZK tim(K x,K y,K z){A(xt==-KI);K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xi,(V*)tcb,r1(d)));R ki(i);}
 Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
 #define C1(x) CO(t)*x(CO(t)*t)
@@ -92,19 +92,18 @@ ZI fexec(I n,S*v)
 {I p=5001;I kon(F t,I n){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
  AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
+#define SK(x,y) [SDL_SCANCODE_##y]=x,
+G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)
+        SK('C',LCTRL)SK('S',LSHIFT)SK('A',LALT)SK('C',RCTRL)SK('S',RSHIFT)SK('A',RALT)SK(255,UNKNOWN)};
+G*k0(){DO(26,km[i+SDL_SCANCODE_A]='a'+i)}
 I main(I n,S*v){
- AN(0,g.c=fexec(n,v));atexit(ex);g0();I run=1;while(run)
+ AN(0,g.c=fexec(n,v));atexit(ex);g0();k0();I run=1;while(run)
  {SDL_Event e;
   while(SDL_PollEvent(&e))
   {if(e.type==SDL_QUIT)run=0;
-   else if (e.type==SDL_KEYDOWN){SDL_Keycode d=e.key.keysym.sym;C e=-1;
-    if(ON(d,SDLK_RIGHT,SDLK_UP))e=d-SDLK_RIGHT;
-    if(strchr(" \r",d)||ON(d,'a','z'))e=d;
-    if(e!=-1&&g.c>0)k(-g.c,"{k 0N!x}",kc(e),(K)0);
-   }else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}
-  }
-  if(g.c==sel(g.c,1e-2))A(sr(g.c));
- }
+   else if(e.type==SDL_KEYDOWN){SDL_Scancode d=e.key.keysym.scancode;G c;if((c=km[d])<200){k(-g.c,"{k 0N!x}",kc(c),(K)0);}}
+   else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}
+  }if(g.c==sel(g.c,1e-2))A(sr(g.c));}
  SDL_DestroyWindow(g.w);
  SDL_Quit();
  return 0;
