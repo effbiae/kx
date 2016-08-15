@@ -88,9 +88,8 @@ ZI g0(){SDL_Init(SDL_INIT_EVERYTHING);TTF_Init();font(0);}
 ZI sel(I c,F t){I r;fd_set f,*p=&f;if(-1<c){FD_ZERO(p);FD_SET(c,p);}else p=0;long s=t,v[]={s,1e6*(t-s)};AS(r=select(c+1,p,(V*)0,(V*)0,(V*)v));P(r&&FD_ISSET(c,&f),c)R 0;}
 Z K2(lam){K r=ktn(0,2);rx=r1(x);ry=r1(y);R r;}
 ZK sr(I c){I t;K x;A(x=k(c,(S)0));A(!xt);R k(-c,"",lam(xx,call(xy)),(K)0);} //async from q
-ZI fexec(I n,S*v)
-{I p=5001;I kon(F t,I n){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
- AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10);P(g.c,g.c)wat(g.q);}}
+I kon(F t,I n,I p){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
+ZI fexec(I n,S*v){AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10,5001);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
 #define SK(x,y) [SDL_SCANCODE_##y]=x,
 G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)
