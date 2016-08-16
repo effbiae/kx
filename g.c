@@ -92,7 +92,7 @@ I kon(F t,I n,I p){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s
 ZI fexec(I n,S*v){AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10,5001);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
 #define SK(x,y) [SDL_SCANCODE_##y]=x,
-G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)
+G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)SK(27,ESCAPE)SK(32,SPACE)
         SK('C',LCTRL)SK('S',LSHIFT)SK('A',LALT)SK('C',RCTRL)SK('S',RSHIFT)SK('A',RALT)SK(255,UNKNOWN)};
 G*k0(){DO(26,km[i+SDL_SCANCODE_A]='a'+i)}
 I main(I n,S*v){
