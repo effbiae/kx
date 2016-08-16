@@ -10,4 +10,4 @@ a:("Ipsum facto ego ergo deum";"has five chars";"The quick brown fox jumps over 
 k:{kp x;ttx a}
 ttx:{rp rcp .'tx0 lam'ld::(0i,'+\last'd),'d:0N!txz'0N!tx0::tx[f;b]'x;fb::(b;f);$[^ti;0;0N!tio[0N!ti]];blink`;ti::tim[500i;`blink;0]}
 blink:{t:(tx . fb)@,a . p;rcp[t;@[ld[*p];0 2;:;7h$(p[1]*u;u:*txz 0N!t)]];fb::|fb;rp`}
-kp:{$[4>i:7h$x;p::p&/0 0|/p::p+(0 1;0 -1;1 0;-1 0)i;[a[p 0]:({y,x,z}[x]/)(0,p[1])_a[p 0];p+:0 1]]}
+kp:{$[4>i:7h$x;p::p&/0 0|/p::p+(0 1;0 -1;1 0;-1 0)i;[a[p 0]:{y,x,z}[x]/(0,p[1])_a[p 0];p+:0 1]]}
