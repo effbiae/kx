@@ -57,12 +57,10 @@ I kon(F t,I n,I p){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s
 ZI fexec(I n,S*v){AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10,5001);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
 I main(I n,S*v)
-{AN(0,g.c=fexec(n,v));atexit(ex);k0();while(1)
- {SDL_Event e;
-  while(SDL_PollEvent(&e))
+{AN(0,g.c=fexec(n,v));atexit(ex);k0();while(1){SDL_Event e;while(SDL_PollEvent(&e))
   {S(e.type,C(SDL_QUIT,goto out)
             C(SDL_KEYDOWN,{G c;if((c=km[e.key.keysym.scancode])<200){k(-g.c,"k",kc(c),(K)0);}})
             C(SDL_USEREVENT,{K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}))
-  }if(g.c==sel(g.c,1e-2))A(sr(g.c));}
- out:SDL_DestroyWindow(g.w);SDL_Quit();R 0;
+  }if(g.c==sel(g.c,1e-2))A(sr(g.c));
+ }out:SDL_DestroyWindow(g.w);SDL_Quit();R 0;
 }
