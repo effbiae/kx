@@ -1,17 +1,11 @@
 //install libsdl2-dev libsdl2-ttf-dev [libcairo2-dev]
 //#include <sys/types.h>
 #include<unistd.h>
-#include <sys/wait.h>
+#include<sys/wait.h>
 #include<SDL2/SDL_ttf.h>
-#include<cairo/cairo.h>
 #include"k+.h"
 
-#define fx(x,y) x
-#define gs(x,y) ""#x
-#define hy(x,y) y
-
-#define crs(c) cairo_status_to_string(cairo_status((V*)c))
-S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}S cairo_e(V*x){R (S)cairo_status_to_string(cairo_status(x));}
+S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}
 #define xsx(c,r,f,a,e) if(c(r=f a)){O("*%s:%s %d\n",#f,e,__LINE__),exit(*(S)0);}
 #define XY(x,c,r,f,a) xsx(c,r,x##_##f,a,x##_e((V*)r))
 #define XZ(x,c,f,a)  {J _r;xsx(c,_r,x##_##f,a,x##_e((V*)_r));}
@@ -19,54 +13,21 @@ S SDL_e(V*x){R (S)SDL_GetError();}S TTF_e(V*x){R (S)TTF_GetError();}S cairo_e(V*
 #define SP(r,f,a) XY(SDL,!,r,f,a)
 #define TA(f,a)   XZ(TTF,!!, f,a)
 #define TP(r,f,a) XY(TTF,!,r,f,a)
-#define CA(f,a)   XZ(cairo,!!, f,a)
-#define CP(r,f,a) XY(cairo,!,r,f,a)
-#define CO(x) cairo_##x
-struct {SDL_Renderer*r;SDL_Window*w;TTF_Font*f;J d[2];J u[2];I t,c,q;cairo_t*ccdd;}g;
-cairo_t*cai(cairo_t*(*f)(cairo_t*))
-{int width, height, pitch;void *pixels;
- SDL_GetWindowSize(g.w, &width, &height);
- SDL_Texture*t;SP(t,CreateTexture,(g.r,SDL_PIXELFORMAT_ARGB8888,SDL_TEXTUREACCESS_STREAMING,width,height));
- SA(LockTexture,(t, NULL, &pixels, &pitch));
- cairo_surface_t *cs;CP(cs,image_surface_create_for_data,(pixels,CAIRO_FORMAT_ARGB32,width,height,pitch));
- A(cs);cairo_t*s;CP(s,create,(cs));A(s);
- cairo_t*fr;A(fr=f(s));SDL_UnlockTexture(t);SA(RenderCopy,(g.r,t,NULL,NULL));SDL_RenderPresent(g.r);R fr;
-}
-cairo_t*cb(cairo_t*cr)
-{char buf[128] = "hello world";
- cairo_set_source_rgb(cr, 1.0, 1.0, 1.0);
- cairo_rectangle(cr, 10, 20, 128, 128);
- cairo_stroke(cr); //cairo_fill(cr)
- R cr;
-}
-
-Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
+struct {SDL_Renderer*r;SDL_Window*w;TTF_Font*f;J d[2];J u[2];I t,c,q;}g;
 #define DJ(T) DO(n,xJ[i]=((T*)a)[i])
-#define DK(T) DO(n,((T*)a)[i]=xJ[i])
-
-#define SE(n,x,y,t,u) DO(n,((t*)x)[i]=((u*)y)[i])
-#define SEJ(n,x,y,u)  SE(n,x,J,y,u)  // ZH t[]={[0=8],[KC=1],[KH=2],[KI=4],[KJ=8]};
 ZK JA(V*a,J n,J z){K x=ktn(KJ,n);SW(z){CS(8,DJ(J))CS(4,DJ(I))CS(2,DJ(H))CS(1,DJ(G))CD:A(0);}R x;}ZK J2(J*a){R JA(a,2,8);}ZK JI2(I*a){R JA(a,2,4);}
-ZI SRDC(V*,G*);
+ZI SRDC(V*r,K x){A(xn==4);G*c=xG;SA(SetRenderDrawColor,(r,c[0],c[1],c[2],c[3]));R 0;}
 Z K2(start)
 {A(xt==KI&&xn==4);SP(g.w,CreateWindow,("W",xI[0],xI[1],xI[2],xI[3],SDL_WINDOW_SHOWN));SP(g.r,CreateRenderer,(g.w,-1,SDL_RENDERER_ACCELERATED));
- A(yt==KG&&yn==4);A(!SRDC(g.r,yG));SA(RenderClear,(g.r));SDL_RenderPresent(g.r);R kj((J)g.r);
+ A(yt==KG&&yn==4);A(!SRDC(g.r,y));SA(RenderClear,(g.r));SDL_RenderPresent(g.r);R kj((J)g.r);
 }
-Z K1(winfo){I s[2];SDL_GetWindowSize(g.w,s,s+1);R JI2(s);}Z K1(finfo){R J2(g.d);}
-/* blink works: set/remove timer
- * by default, text stretches across screen
- * NOW split screen - render white, bg color rectangle in text area
- * on ctrl-[, zip right to left white background, ctrl-] to zip back
- * select text to run, run to cursor, run line
- *  + scratch pad for ad-hoc zips up under text
-*/
-Z K1(clr){A(!SRDC(g.r,xG));SA(RenderClear,(g.r));SDL_RenderPresent(g.r);R kj((J)g.r);}
+Z K1(clr){A(!SRDC(g.r,x));SA(RenderClear,(g.r));SDL_RenderPresent(g.r);R kj((J)g.r);}
 Z K1(t0){SDL_DestroyTexture((V*)xj);R kj(0);}
 Z K2(rcp)/*texture,i4...*/{SA(RenderCopy,(g.r,(V*)xj,0,(SDL_Rect*)yI));R kj((J)g.r); }//SDL_Rect e={0,g.d[1]*y->i,xn*g.d[0],g.d[1]};
 Z K1(rp){SDL_RenderPresent(g.r);R kj((J)g.r);}
-ZI SRDC(V*r,G*c){SA(SetRenderDrawColor,(r,c[0],c[1],c[2],c[3]));R 0;}
-Z K1(rdc){A(xt=KG);A(!SRDC(g.r,xG));R kj(0);}
+Z K1(rdc){A(xt=KG);A(!SRDC(g.r,x));R kj(0);}
 Z SDL_Color*c(K x){A(xt==KG);A(xn==4);R (SDL_Color*)xG;} //[0],xG[1],xG[2],xG[3]};}
+Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
 ZK tx(K x,K y,K z)/*fg,bg,s:txr*/
 {A(zt==KC);A(zn>0);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(T(z)),*c(x),*c(y)));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);}
 Z K1(txz){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
@@ -76,6 +37,9 @@ Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
 #define C1(x) CO(t)*x(CO(t)*t)
 Z K1(rect){A(xt==KI);SA(RenderDrawRect,(g.r,(SDL_Rect*)xI));}
 Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
+#define fx(x,y) x
+#define gs(x,y) ""#x
+#define hy(x,y) y
 #define F(m) m(home,1),m(start,2),m(tim,3),m(tio,1),m(tx,3),m(txz,1),m(t0,1),m(rcp,2),m(rect,1),m(rp,1),m(clr,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
 
