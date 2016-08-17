@@ -46,25 +46,23 @@ Z K1(call)
 }
 Z K1(font){TP(g.f,OpenFont,("DejaVuSansMono.ttf",14));I d[2];TA(SizeText,(g.f,"Wy",d,d+1));*d/=2;DO(2,g.d[i]=d[i]);R kj(7);}
 ZI g0(){SDL_Init(SDL_INIT_EVERYTHING);TTF_Init();font(0);}
+#define SK(x,y) [SDL_SCANCODE_##y]=x,
+G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)SK(27,ESCAPE)SK(32,SPACE)
+        SK('C',LCTRL)SK('S',LSHIFT)SK('A',LALT)SK('C',RCTRL)SK('S',RSHIFT)SK('A',RALT)SK(255,UNKNOWN)};
+G*k0(){DO(26,km[i+SDL_SCANCODE_A]='a'+i);g0();}
 ZI sel(I c,F t){I r;fd_set f,*p=&f;if(-1<c){FD_ZERO(p);FD_SET(c,p);}else p=0;long s=t,v[]={s,1e6*(t-s)};AS(r=select(c+1,p,(V*)0,(V*)0,(V*)v));P(r&&FD_ISSET(c,&f),c)R 0;}
 Z K2(lam){K r=ktn(0,2);rx=r1(x);ry=r1(y);R r;}
 ZK sr(I c){I t;K x;A(x=k(c,(S)0));A(!xt);R k(-c,"",lam(xx,call(xy)),(K)0);} //async from q
 I kon(F t,I n,I p){N(n,P(0<(g.c=khp("",p)),g.c)sel(g.c,t));R g.c;}I wat(J p){I s;R A(waitpid(g.q,&s,0)),A(WIFEXITED(s)),0;}
 ZI fexec(I n,S*v){AS(g.q=fork());$(!g.q,AS(execvp("q",(S[]){"q","g.k",0}))){kon(1e-1,10,5001);P(g.c,g.c)wat(g.q);}}
 ZV ex(V){I s;AS(kill(g.q,9));AS(wait(&s));}
-#define SK(x,y) [SDL_SCANCODE_##y]=x,
-G km[]={SK(0,RIGHT)SK(1,LEFT)SK(2,DOWN)SK(3,UP)SK(4,END)SK(5,HOME)SK(6,PAGEDOWN)SK(7,PAGEUP)SK(8,BACKSPACE)SK(9,TAB)SK(10,RETURN)SK(127,DELETE)SK(27,ESCAPE)SK(32,SPACE)
-        SK('C',LCTRL)SK('S',LSHIFT)SK('A',LALT)SK('C',RCTRL)SK('S',RSHIFT)SK('A',RALT)SK(255,UNKNOWN)};
-G*k0(){DO(26,km[i+SDL_SCANCODE_A]='a'+i)}
-I main(I n,S*v){
- AN(0,g.c=fexec(n,v));atexit(ex);g0();k0();I run=1;while(run)
+I main(I n,S*v)
+{AN(0,g.c=fexec(n,v));atexit(ex);k0();while(1)
  {SDL_Event e;
   while(SDL_PollEvent(&e))
-  {if(e.type==SDL_QUIT)run=0;
-   else if(e.type==SDL_KEYDOWN){SDL_Scancode d=e.key.keysym.scancode;G c;if((c=km[d])<200){k(-g.c,"k",kc(c),(K)0);}}
-   else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}
+  {S(e.type,C(SDL_QUIT,goto out)
+            C(SDL_KEYDOWN,{G c;if((c=km[e.key.keysym.scancode])<200){k(-g.c,"k",kc(c),(K)0);}})
+            C(SDL_USEREVENT,{K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}))
   }if(g.c==sel(g.c,1e-2))A(sr(g.c));}
- SDL_DestroyWindow(g.w);
- SDL_Quit();
- return 0;
+ out:SDL_DestroyWindow(g.w);SDL_Quit();R 0;
 }
