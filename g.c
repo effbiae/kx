@@ -30,7 +30,7 @@ Z SDL_Color*c(K x){A(xt==KG);A(xn==4);R (SDL_Color*)xG;} //[0],xG[1],xG[2],xG[3]
 Z K1(T){A(xt==KC);K a=ktn(KC,xn+1);DO(xn,kC(a)[i]=xC[i]);kC(a)[xn]=0;R a;}
 ZK p(K x,K y,K z)/*fg,bg,s:txr*/
 {A(zt==KC);A(zn>0);SDL_Surface*u;TP(u,RenderText_Shaded,(g.f,kC(T(z)),*c(x),*c(y)));SDL_Texture*a;SP(a,CreateTextureFromSurface,(g.r,u));SDL_FreeSurface(u);R kj((J)a);}
-Z K1(txz){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
+Z K1(pd){A(xt==-KJ);K f=kj(0);K a=kj(0);K r=ktn(KI,2);SA(QueryTexture,((V*)xj,(I*)&f->j,(I*)&a->j,rI,rI+1));r0(f);r0(a);R r;}
 ZI tcb(I x,V*y){SDL_Event e={0};SDL_UserEvent f={0};e.type=f.type=SDL_USEREVENT;f.data1=y;e.user=f;A(SDL_PushEvent(&e));R x;}
 ZK tim(K x,K y,K z){A(xt==-KI);K d=knk(2,y,z);I i;A(i=SDL_AddTimer(xi,(V*)tcb,r1(d)));R ki(i);}
 Z K2(tio){A(SDL_RemoveTimer(xi));R kj(0);}
@@ -40,7 +40,7 @@ Z K1(home){S s=getenv("HOME");x=ktn(KC,strlen(s));DO(xn,xC[i]=s[i])R x;}
 #define fx(x,y) x
 #define gs(x,y) ""#x
 #define hy(x,y) y
-#define F(m) m(home,1),m(start,2),m(tim,3),m(tio,1),m(p,3),m(txz,1),m(t0,1),m(rcp,2),m(rect,1),m(rp,1),m(clr,1)
+#define F(m) m(home,1),m(start,2),m(tim,3),m(tio,1),m(p,3),m(pd,1),m(t0,1),m(rcp,2),m(rect,1),m(rp,1),m(clr,1)
 ZK(*f[])()={F(fx),0};ZS n[]={F(gs),0};ZJ a[]={F(hy),0};
 
 Z K1(call)
