@@ -100,7 +100,7 @@ I main(I n,S*v){
  {SDL_Event e;
   while(SDL_PollEvent(&e))
   {if(e.type==SDL_QUIT)run=0;
-   else if(e.type==SDL_KEYDOWN){SDL_Scancode d=e.key.keysym.scancode;G c;if((c=km[d])<200){k(-g.c,"{k 0N!x}",kc(c),(K)0);}}
+   else if(e.type==SDL_KEYDOWN){SDL_Scancode d=e.key.keysym.scancode;G c;if((c=km[d])<200){k(-g.c,"k",kc(c),(K)0);}}
    else if(e.type==SDL_USEREVENT){K x=e.user.data1;A(!xt);A(xn==2);k(-g.c,"{value[x]y}",r1(xK[0]),r1(xK[1]),(K)0);}
   }if(g.c==sel(g.c,1e-2))A(sr(g.c));}
  SDL_DestroyWindow(g.w);
